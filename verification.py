@@ -16,3 +16,4 @@ if __name__ == "__main__":
     content = getSampleContent("test.txt")
     formatted_data = formatting_utils.getFormattedData(content)
     csv_writer_utils.write_csv(formatted_data, "validation")
+    

@@ -37,8 +37,16 @@ def get_data_for_ranges(range_params, payLoad):
         headers["Content-Length"] = str(utils.calculate_content_length(payLoad))
         content = getContentText(headers, payLoad)        
         formatted_data = formatting_utils.getFormattedData(content)
-        csv_writer_utils.write_csv(formatted_data, "{}_{}".format(range[0], range[1]))
         data_for_ranges[range[0]] = formatted_data
         time.sleep(1)
     merged_rows = csv_writer_utils.merge_all_dicts(data_for_ranges)
-    csv_writer_utils.write_csv(merged_rows, 'newfile')
+    return merged_rows
+
+def write_rows_to_csv(fileName,merged_rows, payLoad):
+    csv_writer_utils.write_csv(merged_rows, payLoad, fileName)
+
+def get_and_write_data(range_params, payLoad):
+    merged_rows = get_data_for_ranges(range_params, payLoad)
+    fileName = utils.get_file_name(range_params)
+    [payLoad.pop(key) for key in ["specrng_max", "specrng_min", "resolution", "csrfmiddlewaretoken"]]
+    write_rows_to_csv(fileName, merged_rows, payLoad)
