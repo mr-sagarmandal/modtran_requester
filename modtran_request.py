@@ -8,7 +8,7 @@ payLoad = {
     "csrfmiddlewaretoken" : "bh9S5umFxQk4EFeYJjH7qmdQS4acxNVI",
     "rtmode" : "RT_SOLAR_AND_THERMAL" , 
     "atmosphere_model" : "ATM_MIDLAT_SUMMER" ,
-    "water_column" : 3635.9 ,
+    "water_column" : 5000 ,
     "ozone_column" : 0.33176 ,
     "co2_ppmv" : 400 ,
     "co_ppmv" : 0.15 ,
@@ -31,7 +31,7 @@ payLoad = {
     "ccl4_ppbv_ref" : 0.13 ,
     "ground_temp_K" : 294.2 ,
     "ground_emission" : 0 ,
-    "aerosol_model" : "AER_MARITIME_NAVY" ,
+    "aerosol_model" : "AER_RURAL" ,
     "visibility_km" : 23.0 ,
     "sens_altitude_km" : 50 ,
     "sens_zenith_deg" : 180 ,
@@ -45,11 +45,12 @@ payLoad = {
 }
 
 range_pairs = [
-    [250, 500, 0.2]
+    [250, 2500, 2.2],
+    [2500, 4000, 4]
 ]
         
        
 if __name__ == "__main__":
-    modtran_client.get_data_for_ranges(range_pairs, payLoad)
+    modtran_client.get_and_write_data(range_pairs, payLoad)
 
 

@@ -1,4 +1,5 @@
 import os
+import sys
 
 def dumpContent(content):
     try:
@@ -6,7 +7,6 @@ def dumpContent(content):
             file.write(json.dumps(content, indent=4))
     finally:
         file.close()
-
 
 def calculate_content_length(payload):
     keys = payload.keys()
@@ -21,6 +21,26 @@ def calculate_content_length(payload):
 def make_outputdir_if_absent():
     if not os.path.isdir('./out'):
         os.mkdir('./out')
+
+def get_min_max_range(range_params):
+    minimum = sys.maxsize
+    maximum = -1
+    for range in range_params:
+        minimum = min(minimum, range[0])
+        maximum = max(maximum, range[1])
+    return [minimum, maximum]
+
+def get_file_name(range_params):
+    min_max = get_min_max_range(range_params)
+    return "{}-{}".format(min_max[0], min_max[1])
+
+def get_payload_row(payLoad):
+    row = []
+    for key, value in payLoad:
+        if key in ("specrng_max", "specrng_min", "resolution"):
+            continue
+        row.append("{}-{}".format(key, value))
+    return row
 
 if __name__ == "__main__":
     make_outputdir_if_absent()
